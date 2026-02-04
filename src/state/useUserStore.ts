@@ -4,12 +4,14 @@ import { signIn, signOut } from '@/data/auth'
 
 export const useUserStore = create<UserState>((set) => ({
     userName: undefined,
+    userId: undefined,
     permissions: undefined,
     loading: false,
     handleSignIn: async () => {
         set({ loading: true })
         const user = await signIn()
         set({
+            userId: user.id,
             userName: user.name,
             permissions: undefined,
             loading: false,
@@ -19,6 +21,7 @@ export const useUserStore = create<UserState>((set) => ({
         set({ loading: true })
         await signOut()
         set({
+            userId: undefined,
             userName: undefined,
             permissions: undefined,
             loading: false,

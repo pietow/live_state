@@ -11,7 +11,7 @@ type User = {
 export async function signIn(): Promise<User> {
     return new Promise((resolve) => {
         setTimeout(
-            () => resolve({ id: '1', name: 'Bob', permissions: ['admin'] }),
+            () => resolve({ id: 'u-101', name: 'Bob', permissions: ['admin'] }),
             DELAY,
         )
     })
