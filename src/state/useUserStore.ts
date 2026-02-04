@@ -1,0 +1,33 @@
+import { create } from 'zustand'
+import { UserState } from './types'
+import { signIn, signOut } from '@/data/auth'
+
+export const useUserStore = create<UserState>((set) => ({
+    userName: undefined,
+    permissions: undefined,
+    loading: false,
+    handleSignIn: async () => {
+        set({ loading: true })
+        const user = await signIn()
+        set({
+            userName: user.name,
+            permissions: undefined,
+            loading: false,
+        })
+    },
+    handleSignOut: async () => {
+        set({ loading: true })
+        await signOut()
+        set({
+            userName: undefined,
+            permissions: undefined,
+            loading: false,
+        })
+    },
+    togglePermissions: () =>
+        set((state) =>
+            state.permissions?.length === 0
+                ? { permissions: ['admin'] }
+                : { permissions: [] },
+        ),
+}))

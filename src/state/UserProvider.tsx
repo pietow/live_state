@@ -1,7 +1,7 @@
 'use client'
 
 import { type ReactNode, useState } from 'react'
-import { signIn, signOut } from '@/app/data/auth'
+import { signIn, signOut } from '@/data/auth'
 import { UserContext } from './UserContext'
 
 export function UserProvider({ children }: { children: ReactNode }) {
@@ -26,14 +26,22 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
 
     const togglePermissions = () =>
-        setPermissions((currPermission) => currPermission?.length === 0 ? ['admin'] : [])
+        setPermissions((currPermission) =>
+            currPermission?.length === 0 ? ['admin'] : [],
+        )
 
-    return <UserContext value={{
-        userName,
-        permissions,
-        loading,
-        handleSignIn,
-        handleSignOut,
-        togglePermissions
-    }}>{children}</UserContext>
+    return (
+        <UserContext
+            value={{
+                userName,
+                permissions,
+                loading,
+                handleSignIn,
+                handleSignOut,
+                togglePermissions,
+            }}
+        >
+            {children}
+        </UserContext>
+    )
 }

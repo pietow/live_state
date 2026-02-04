@@ -1,10 +1,10 @@
-import { UserContext } from '@/state/UserContext'
-import { use } from 'react'
+'use client'
+import { useUserStore } from '@/state/useUserStore'
 import { type ReactNode } from 'react'
 
 
 export function Main({ children }: { children: ReactNode }) {
-    const { userName } = use(UserContext)
+    const userName  = useUserStore(state => state.userName) 
     return (
         <main>
             <h1>Welcome</h1>

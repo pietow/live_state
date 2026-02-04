@@ -1,19 +1,21 @@
-import { use } from 'react'
-import { UserContext } from '@/state/UserContext'
+'use client'
+
+import { useUserStore } from '@/state/useUserStore'
 
 export function Header() {
-    const {
-        userName,
-        handleSignIn,
-        handleSignOut,
-        loading,
-        togglePermissions,
-    } = use(UserContext)
+    const userName = useUserStore((state) => state.userName)
+    const loading = useUserStore((state) => state.loading)
+    const handleSignIn = useUserStore((state) => state.handleSignIn)
+    const handleSignOut = useUserStore((state) => state.handleSignOut)
+    const togglePermissions = useUserStore((state) => state.togglePermissions)
+
     return (
         <header>
             {userName ? (
                 <>
-                    <button onClick={togglePermissions}>{userName} has signed in</button>
+                    <button onClick={togglePermissions}>
+                        {userName} has signed in
+                    </button>
                     <button
                         type="button"
                         onClick={handleSignOut}
@@ -23,11 +25,7 @@ export function Header() {
                     </button>
                 </>
             ) : (
-                <button
-                    type="button"
-                    onClick={handleSignIn}
-                    disabled={loading}
-                >
+                <button type="button" onClick={handleSignIn} disabled={loading}>
                     {loading ? '...' : 'Sign in'}
                 </button>
             )}
