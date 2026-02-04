@@ -1,8 +1,8 @@
-export function Content({
-    permissions,
-}: {
-    permissions: undefined | string[]
-}) {
+import { use } from "react"
+import { UserContext } from '@/state/UserContext';
+
+export function Content() {
+    const { permissions } = use(UserContext)
     if (permissions === undefined) {
         return null
     }
