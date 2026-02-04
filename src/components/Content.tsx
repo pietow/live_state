@@ -2,7 +2,6 @@
 
 import { usePostsStore } from '@/state/usePostsStore'
 import { useUserStore } from '@/state/useUserStore'
-import { Loading } from '../../../live_blog/src/components/Loading'
 import { PostCard } from './PostCard'
 
 export function Content() {
