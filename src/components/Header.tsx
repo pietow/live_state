@@ -1,5 +1,6 @@
 'use client'
 
+import { usePostsStore } from '@/state/usePostsStore'
 import { useUserStore } from '@/state/useUserStore'
 
 export function Header() {
@@ -8,6 +9,7 @@ export function Header() {
     const handleSignIn = useUserStore((state) => state.handleSignIn)
     const handleSignOut = useUserStore((state) => state.handleSignOut)
     const togglePermissions = useUserStore((state) => state.togglePermissions)
+    const loadPosts = usePostsStore((state) => state.loadPosts)
 
     return (
         <header>
@@ -25,7 +27,14 @@ export function Header() {
                     </button>
                 </>
             ) : (
-                <button type="button" onClick={handleSignIn} disabled={loading}>
+                <button
+                    type="button"
+                    onClick={() => {
+                        handleSignIn()
+                        loadPosts()
+                    }}
+                    disabled={loading}
+                >
                     {loading ? '...' : 'Sign in'}
                 </button>
             )}
