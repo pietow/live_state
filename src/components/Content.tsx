@@ -1,16 +1,13 @@
 'use client'
 
-import { useUserStore } from '@/state/useUserStore'
-import { usePostsStore } from '@/state/usePostsStore'
-import { PostCard } from './PostCard'
+import { useSelector } from "react-redux"
+import { type RootState } from "@/store"
+
 
 
 export function Content() {
-    const permissions = useUserStore((state) => state.permissions)
+    const permissions = useSelector((s: RootState) => s.user.permissions)
 
-    const posts = usePostsStore((state) => state.posts)
-    const loading = usePostsStore((state) => state.loading)
-    const error = usePostsStore((state) => state.error)
 
     if (permissions === undefined) return null
 
@@ -23,16 +20,6 @@ export function Content() {
             </p>
 
             <div className="postsColumn">
-                {loading ? (
-                    <p className="loadingText">Loading posts...</p>
-                ) : null}
-                {error ? (
-                    <span className="errorText">Error: {error}</span>
-                ) : null}
-
-                {posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))}
             </div>
         </div>
     )

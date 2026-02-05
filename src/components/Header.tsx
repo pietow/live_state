@@ -1,26 +1,31 @@
 'use client'
 
-import { usePostsStore } from '@/state/usePostsStore'
-import { useUserStore } from '@/state/useUserStore'
+import { useDispatch, useSelector } from 'react-redux'
+import type { AppDispatch, RootState } from '@/store'
+import { signInThunk, signOutThunk, userAction } from '@/reducers/user'
+import { loadPostsThunk } from '@/reducers/posts'
 
 export function Header() {
-    const userName = useUserStore((state) => state.userName)
-    const loading = useUserStore((state) => state.loading)
-    const handleSignIn = useUserStore((state) => state.handleSignIn)
-    const handleSignOut = useUserStore((state) => state.handleSignOut)
-    const togglePermissions = useUserStore((state) => state.togglePermissions)
-    const loadPosts = usePostsStore((state) => state.loadPosts)
+    const dispatch = useDispatch<AppDispatch>()
+
+    const userName = useSelector((s: RootState) => s.user.userName)
+    const loading = useSelector((s: RootState) => s.user.loading)
+    const error = useSelector((s: RootState) => s.user.error)
 
     return (
         <header>
             {userName ? (
                 <>
-                    <button onClick={togglePermissions}>
+                    <button
+                        onClick={() => dispatch(userAction.togglePermissions())}
+                    >
+                        {/* ohne Action Creator müsste man hier einen Action manuell erstellen */}
+                        {/* dispatch({type: 'user/togglePermission' }) */}
                         {userName} has signed in
                     </button>
                     <button
                         type="button"
-                        onClick={handleSignOut}
+                        onClick={() => dispatch(signOutThunk())} //dispatch(asyncActionCreator())
                         disabled={loading}
                     >
                         {loading ? '...' : 'Sign out'}
@@ -30,8 +35,8 @@ export function Header() {
                 <button
                     type="button"
                     onClick={() => {
-                        handleSignIn()
-                        loadPosts()
+                        dispatch(signInThunk())
+                        dispatch(loadPostsThunk())
                     }}
                     disabled={loading}
                 >

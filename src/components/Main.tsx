@@ -1,10 +1,13 @@
 'use client'
 import { useUserStore } from '@/state/useUserStore'
+import { RootState } from '@/store'
 import { type ReactNode } from 'react'
+import { useSelector } from 'react-redux'
 
 
 export function Main({ children }: { children: ReactNode }) {
-    const userName  = useUserStore(state => state.userName) 
+   
+    const userName = useSelector((s: RootState) => s.user.userName)
     return (
         <main>
             <h1>Welcome</h1>
