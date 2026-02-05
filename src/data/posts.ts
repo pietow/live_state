@@ -61,7 +61,7 @@ const DELAY = 2000
 
 
 
-export async function getPosts() {
+export async function getPosts(): Promise<Post[]> {
     return new Promise((resolve, reject) => setTimeout(()=>resolve(posts),
     //reject(new Error('Failed to fetch posts))
      DELAY),
